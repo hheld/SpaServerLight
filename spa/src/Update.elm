@@ -1,10 +1,10 @@
-module Update exposing (..)
+module Update exposing (update)
 
-import Navigation
 import Messages exposing (Msg(..))
 import Model exposing (..)
+import Navigation
+import Routing exposing (Route(..), route)
 import UrlParser as Url
-import Routing exposing (route, Route(..))
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -15,7 +15,8 @@ update msg model =
                 newRoute =
                     Url.parseHash route location
             in
-                { model
-                    | route = newRoute
-                }
-                    ! []
+            ( { model
+                | route = newRoute
+              }
+            , Cmd.none
+            )

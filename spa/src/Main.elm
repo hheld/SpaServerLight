@@ -1,11 +1,11 @@
-module Main exposing (..)
+module Main exposing (Flags, init, main, subscriptions)
 
-import Navigation
-import UrlParser as Url
 import Messages exposing (Msg(..))
-import Update exposing (update)
 import Model exposing (Model, initialModel)
+import Navigation
 import Routing
+import Update exposing (update)
+import UrlParser as Url
 import View exposing (view)
 
 
@@ -23,7 +23,9 @@ init flags location =
         currentModel =
             initialModel currentRoute flags.pageHeader
     in
-        currentModel ! []
+    ( currentModel
+    , Cmd.none
+    )
 
 
 

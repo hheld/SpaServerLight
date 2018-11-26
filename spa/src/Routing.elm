@@ -1,7 +1,7 @@
-module Routing exposing (..)
+module Routing exposing (Route(..), route)
 
 import Navigation
-import UrlParser as Url exposing ((</>), top, s)
+import UrlParser as Url exposing ((</>), s, top)
 
 
 type Route

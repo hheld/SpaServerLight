@@ -1,4 +1,4 @@
-module Model exposing (..)
+module Model exposing (Model, initialModel)
 
 import Routing exposing (Route)
 

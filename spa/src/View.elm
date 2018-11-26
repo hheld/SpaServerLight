@@ -1,9 +1,9 @@
-module View exposing (..)
+module View exposing (TabInfo, isTabActive, navigation, outerLayout, page, tabInfos, view)
 
-import Html exposing (Html, text, div, ul, a, h1, li)
+import Html exposing (Html, a, div, h1, li, text, ul)
 import Html.Attributes exposing (class, href)
-import Model exposing (Model)
 import Messages exposing (Msg)
+import Model exposing (Model)
 import Routing exposing (Route(..))
 
 
@@ -26,7 +26,7 @@ page model =
                 Nothing ->
                     text "Page not found!"
     in
-        outerLayout model content
+    outerLayout model content
 
 
 outerLayout : Model -> Html Msg -> Html Msg
@@ -66,12 +66,14 @@ isTabActive model { route, tabTitle } =
         Just HomeRoute ->
             if route == "#" || route == "" then
                 True
+
             else
                 False
 
         Just OtherRoute ->
             if route == "#otherRoute" then
                 True
+
             else
                 False
 
@@ -86,6 +88,7 @@ navigation model =
         tabClass ti =
             if isTabActive model ti then
                 "active"
+
             else
                 ""
 
@@ -100,4 +103,4 @@ navigation model =
                 )
                 tabInfos
     in
-        ul [ class "nav nav-pills nav-stacked" ] tabs
+    ul [ class "nav nav-pills nav-stacked" ] tabs
