@@ -1,10 +1,12 @@
 module Update exposing (update)
 
+import Browser
+import Browser.Navigation as Nav
 import Messages exposing (Msg(..))
 import Model exposing (..)
-import Navigation
-import Routing exposing (Route(..), route)
-import UrlParser as Url
+import Routing exposing (Route(..), fromUrl)
+import Url
+import Url.Parser exposing (Parser)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -13,10 +15,18 @@ update msg model =
         UrlChange location ->
             let
                 newRoute =
-                    Url.parseHash route location
+                    fromUrl location
             in
             ( { model
                 | route = newRoute
               }
             , Cmd.none
             )
+
+        UrlRequest urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Cmd.none )

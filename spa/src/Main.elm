@@ -1,11 +1,13 @@
 module Main exposing (Flags, init, main, subscriptions)
 
+import Browser
+import Browser.Navigation as Nav
 import Messages exposing (Msg(..))
 import Model exposing (Model, initialModel)
-import Navigation
 import Routing
 import Update exposing (update)
-import UrlParser as Url
+import Url
+import Url.Parser
 import View exposing (view)
 
 
@@ -14,14 +16,14 @@ type alias Flags =
     }
 
 
-init : Flags -> Navigation.Location -> ( Model, Cmd Msg )
-init flags location =
+init : Flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags location key =
     let
         currentRoute =
-            Url.parseHash Routing.route location
+            Routing.fromUrl location
 
         currentModel =
-            initialModel currentRoute flags.pageHeader
+            initialModel key currentRoute flags.pageHeader
     in
     ( currentModel
     , Cmd.none
@@ -43,9 +45,11 @@ subscriptions model =
 
 main : Program Flags Model Msg
 main =
-    Navigation.programWithFlags UrlChange
+    Browser.application
         { init = init
         , view = view
         , update = update
         , subscriptions = subscriptions
+        , onUrlChange = UrlChange
+        , onUrlRequest = UrlRequest
         }

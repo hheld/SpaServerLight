@@ -1,7 +1,7 @@
-module Routing exposing (Route(..), route)
+module Routing exposing (Route(..), fromUrl)
 
-import Navigation
-import UrlParser as Url exposing ((</>), s, top)
+import Url
+import Url.Parser exposing ((</>), Parser, map, oneOf, s, top)
 
 
 type Route
@@ -9,9 +9,14 @@ type Route
     | OtherRoute
 
 
-route : Url.Parser (Route -> a) a
+route : Parser (Route -> a) a
 route =
-    Url.oneOf
-        [ Url.map HomeRoute top
-        , Url.map OtherRoute (s "otherRoute")
+    oneOf
+        [ map HomeRoute top
+        , map OtherRoute (s "otherRoute")
         ]
+
+
+fromUrl : Url.Url -> Maybe Route
+fromUrl url =
+    Url.Parser.parse route <| { url | path = Maybe.withDefault "#" url.fragment, fragment = Nothing }

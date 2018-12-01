@@ -1,7 +1,9 @@
 module Messages exposing (Msg(..))
 
-import Navigation
+import Browser
+import Url
 
 
 type Msg
-    = UrlChange Navigation.Location
+    = UrlChange Url.Url
+    | UrlRequest Browser.UrlRequest

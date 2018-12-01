@@ -1,13 +1,9 @@
-var path = require("path");
-var webpack = require("webpack")
+var path = require('path');
+var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: {
-    app: [
-      './src/index.js'
-    ]
-  },
+  entry: {app: ['./src/index.js']},
 
   output: {
     path: path.resolve(__dirname + '/../dist'),
@@ -24,14 +20,16 @@ module.exports = {
         ]
       },
       {
-        test:    /\.html$/,
+        test: /\.html$/,
         exclude: /node_modules/,
-        loader:  'file?name=[name].[ext]',
+        loader: 'file?name=[name].[ext]',
       },
       {
-        test:    /\.elm$/,
+        test: /\.elm$/,
         exclude: [/elm-stuff/, /node_modules/],
-        loader:  'elm-webpack-loader' + (process.env.NODE_ENV === 'debug' ? '?debug=true' : ''),
+        loader: 'elm-webpack-loader' +
+            (process.env.NODE_ENV === 'debug' ? '?debug=true' : ''),
+        options: (process.env.NODE_ENV === 'debug' ? {} : {optimize: true}),
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -46,15 +44,10 @@ module.exports = {
     noParse: /\.elm$/,
   },
 
-  plugins : [
-      new webpack.DefinePlugin({
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || ''),
-          'pageTitle': '"App page header goes here!"'
-      }),
+  plugins: [
+    new webpack.DefinePlugin({'pageTitle': '"App page header goes here!"'}),
 
-      new HtmlWebpackPlugin({
-          title: 'App name goes here!!',
-          template: 'src/index.ejs'
-      }),
+    new HtmlWebpackPlugin(
+        {title: 'App name goes here!!', template: 'src/index.ejs'}),
   ]
 };
