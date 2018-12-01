@@ -1,6 +1,8 @@
 var path = require('path');
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
+var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ElmMinify = require('elm-minify');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
   entry: {app: ['./src/index.js']},
@@ -49,5 +51,8 @@ module.exports = {
 
     new HtmlWebpackPlugin(
         {title: 'App name goes here!!', template: 'src/index.ejs'}),
-  ]
+  ],
+
+  optimization:
+      {minimizer: [new TerserPlugin({terserOptions: ElmMinify.terserConfig})]},
 };

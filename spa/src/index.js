@@ -2,7 +2,7 @@
 
 // provide Bootstrap classes
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import '../node_modules/jquery/src/jquery';
+import '../node_modules/jquery/dist/jquery.min';
 import '../node_modules/bootstrap/dist/js/bootstrap.min';
 
 // own style
