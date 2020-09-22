@@ -2,19 +2,18 @@ module Update exposing (update)
 
 import Browser
 import Browser.Navigation as Nav
-import Messages exposing (Msg(..))
-import Model exposing (..)
-import Routing exposing (Route(..), fromUrl)
+import Model as M
+import Routing as R
 import Url
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : M.Msg -> M.Model -> ( M.Model, Cmd M.Msg )
 update msg model =
     case msg of
-        UrlChange location ->
+        M.UrlChange location ->
             let
                 newRoute =
-                    fromUrl location
+                    R.fromUrl location
             in
             ( { model
                 | route = newRoute
@@ -22,7 +21,7 @@ update msg model =
             , Cmd.none
             )
 
-        UrlRequest urlRequest ->
+        M.UrlRequest urlRequest ->
             case urlRequest of
                 Browser.Internal url ->
                     ( model, Nav.pushUrl model.key (Url.toString url) )

@@ -1,19 +1,26 @@
-module Model exposing (Model, initialModel)
+module Model exposing (Model, Msg(..), initialModel)
 
+import Browser
 import Browser.Navigation as Nav
-import Routing exposing (Route)
+import Routing as R
+import Url
 
 
 type alias Model =
     { key : Nav.Key
-    , route : Maybe Route
+    , route : Maybe R.Route
     , pageHeader : String
     }
 
 
-initialModel : Nav.Key -> Maybe Route -> String -> Model
+initialModel : Nav.Key -> Maybe R.Route -> String -> Model
 initialModel key route pageHeader =
     { key = key
     , route = route
     , pageHeader = pageHeader
     }
+
+
+type Msg
+    = UrlChange Url.Url
+    | UrlRequest Browser.UrlRequest

@@ -2,12 +2,11 @@ module Main exposing (Flags, init, main, subscriptions)
 
 import Browser
 import Browser.Navigation as Nav
-import Messages exposing (Msg(..))
-import Model exposing (Model, initialModel)
+import Model as M
 import Routing
-import Update exposing (update)
+import Update as U
 import Url
-import View exposing (view)
+import View as V
 
 
 type alias Flags =
@@ -15,14 +14,14 @@ type alias Flags =
     }
 
 
-init : Flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init : Flags -> Url.Url -> Nav.Key -> ( M.Model, Cmd M.Msg )
 init flags location key =
     let
         currentRoute =
             Routing.fromUrl location
 
         currentModel =
-            initialModel key currentRoute flags.pageHeader
+            M.initialModel key currentRoute flags.pageHeader
     in
     ( currentModel
     , Cmd.none
@@ -33,7 +32,7 @@ init flags location key =
 -- Subscriptions
 
 
-subscriptions : Model -> Sub Msg
+subscriptions : M.Model -> Sub M.Msg
 subscriptions model =
     Sub.none
 
@@ -42,13 +41,13 @@ subscriptions model =
 -- Main
 
 
-main : Program Flags Model Msg
+main : Program Flags M.Model M.Msg
 main =
     Browser.application
         { init = init
-        , view = view
-        , update = update
+        , view = V.view
+        , update = U.update
         , subscriptions = subscriptions
-        , onUrlChange = UrlChange
-        , onUrlRequest = UrlRequest
+        , onUrlChange = M.UrlChange
+        , onUrlRequest = M.UrlRequest
         }

@@ -3,27 +3,26 @@ module View exposing (TabInfo, isTabActive, navigation, outerLayout, page, tabIn
 import Browser
 import Html exposing (Html, a, div, h1, li, text, ul)
 import Html.Attributes exposing (class, href)
-import Messages exposing (Msg)
-import Model exposing (Model)
-import Routing exposing (Route(..))
+import Model as M
+import Routing as R
 
 
-view : Model -> Browser.Document Msg
+view : M.Model -> Browser.Document M.Msg
 view model =
     { title = model.pageHeader
     , body = [ div [] [ page model ] ]
     }
 
 
-page : Model -> Html Msg
+page : M.Model -> Html M.Msg
 page model =
     let
         content =
             case model.route of
-                Just HomeRoute ->
+                Just R.HomeRoute ->
                     text "Home"
 
-                Just OtherRoute ->
+                Just R.OtherRoute ->
                     text "Other route content goes here"
 
                 Nothing ->
@@ -32,7 +31,7 @@ page model =
     outerLayout model content
 
 
-outerLayout : Model -> Html Msg -> Html Msg
+outerLayout : M.Model -> Html M.Msg -> Html M.Msg
 outerLayout model content =
     div [ class "container-fluid" ]
         [ div
@@ -63,17 +62,17 @@ tabInfos =
     ]
 
 
-isTabActive : Model -> TabInfo -> Bool
+isTabActive : M.Model -> TabInfo -> Bool
 isTabActive model { route, tabTitle } =
     case model.route of
-        Just HomeRoute ->
+        Just R.HomeRoute ->
             if route == "#" || route == "" then
                 True
 
             else
                 False
 
-        Just OtherRoute ->
+        Just R.OtherRoute ->
             if route == "#otherRoute" then
                 True
 
@@ -84,7 +83,7 @@ isTabActive model { route, tabTitle } =
             False
 
 
-navigation : Model -> Html Msg
+navigation : M.Model -> Html M.Msg
 navigation model =
     let
         tabClass : TabInfo -> String
@@ -103,7 +102,7 @@ navigation model =
             else
                 "nav-link"
 
-        tabs : List (Html Msg)
+        tabs : List (Html M.Msg)
         tabs =
             List.map
                 (\ti ->
