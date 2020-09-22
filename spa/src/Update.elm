@@ -6,7 +6,6 @@ import Messages exposing (Msg(..))
 import Model exposing (..)
 import Routing exposing (Route(..), fromUrl)
 import Url
-import Url.Parser exposing (Parser)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

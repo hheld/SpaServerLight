@@ -19,4 +19,4 @@ route =
 
 fromUrl : Url.Url -> Maybe Route
 fromUrl url =
-    Url.Parser.parse route <| { url | path = Maybe.withDefault "#" url.fragment, fragment = Nothing }
+    Url.Parser.parse route <| { url | path = Maybe.withDefault "" url.fragment, fragment = Nothing }
