@@ -7,7 +7,6 @@ import Model exposing (Model, initialModel)
 import Routing
 import Update exposing (update)
 import Url
-import Url.Parser
 import View exposing (view)
 
 
